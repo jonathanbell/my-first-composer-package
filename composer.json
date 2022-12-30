@@ -1,0 +1,24 @@
+{
+    "name": "jonathanbell/first-php-cli",
+    "description": "Just dorking around! This is my first PHP CLI tool made with Composer.",
+    "license": "WTFPL",
+    "autoload": {
+        "psr-4": {
+            "Jonathanbell\\FirstPhpCli\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jonathan Bell",
+            "email": "jonathanbell.ca@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "config": {
+        "platform": {
+            "php": "^8.0.0"
+        }
+    }
+}
