@@ -5,28 +5,30 @@ namespace Jonathanbell\Firstphpcli;
 class Transcription
 {
 
-  protected array $lines;
+  public function __construct(protected array $lines)
+  {
+    $this->lines = $this->discardIrrelevantLines(array_map('trim', $lines));
+  }
 
   public static function load(string $path): self
   {
-    $instance = new static();
-
-    $instance->lines = $instance->discardIrrelevantLines(file($path));
-
-    return $instance;
+    return new static(file($path));
   }
 
   public function lines(): array
   {
-    return $this->lines;
+    $lines = [];
+
+    for ($i = 0; $i < count($this->lines); $i += 2) {
+      $lines[] = new Line($this->lines[$i], $this->lines[$i + 1]);
+    }
+
+    return $lines;
   }
 
   protected function discardIrrelevantLines(array $lines): array {
-    $lines = array_map('trim', $lines);
-
     return array_values(array_filter($lines, callback: function ($line) {
-      $line = trim($line);
-      return !str_contains($line, 'WEBVTT') && !empty($line) && !is_numeric($line);
+      return Line::valid($line);
     }));
   }
 
